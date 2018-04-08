@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 
 // HTML request logger
 app.use(logger('combined'))
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 
 // Session manager
 app.use(session({
@@ -46,10 +46,10 @@ app.get('/dashboard', async (req, res) => {
 })
 
 
-// app.post('/dashboard/expenditure', routes.expenditure)
-
-// const router = express.Router()
+app.post('/expenditure', routes.expenditure)
+app.post('/income', routes.income)
 app.post('/update_balance', routes.update_balance)
 app.post('/register', routes.register)
 app.post('/login', routes.login)
+
 app.listen(5000)
