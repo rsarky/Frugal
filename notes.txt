@@ -1,0 +1,16 @@
+Create these tables.
+
+create table expense ( user_id,timestamp,amount,mode,comments)
+begin
+
+/
+
+
+TODO
+Post route to expenditure
+Enforce some kind of logout system
+
+Make an expenditure table
+make api for the above
+
+api to display recent transactions

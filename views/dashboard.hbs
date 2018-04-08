@@ -1,0 +1,97 @@
+<h1>Hi {{ username }}</h1>
+<ul>
+    <li> Cash : {{ cash }}</li>
+    <li> Ewallet : {{ ewallet }}</li>
+    <li> Bank : {{ bank }} </li>
+</ul>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Update
+</button>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="http://localhost:5000/update_balance" method="post" role="form">
+                    <div class="form-group row">
+                        <label for="cash" class="col-sm-2 col-form-label">Cash</label>
+                        <div class="col-sm-5">
+                            <input type="number" name="cash" class="form-control" id="cash" placeholder="Cash">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cash" class="col-sm-2 col-form-label">Ewallet</label>
+                        <div class="col-sm-5">
+                            <input type="number" name="ewallet" class="form-control" id="cash" placeholder="E-Wallet">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="cash" class="col-sm-2 col-form-label">Bank</label>
+                        <div class="col-sm-5">
+                            <input type="number" name="bank" class="form-control" id="cash" placeholder="Bank">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <button type="submit" tabindex="4" class="form-control btn btn-login">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<h2>Expense</h2>
+
+<form action="http://localhost:5000/expense" method="post" role="form">
+    <div class="form-group">
+        <select class="custom-select">
+            <option selected>What did you spend on?</option>
+            <option value="1">Food</option>
+            <option value="2">Travel</option>
+            <option value="4">Utilities</option>
+            <option value="5">Laundry</option>
+            <option value="6">Others</option>
+        </select>
+    </div>
+    <div class="form-group row">
+        <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+        <div class="col-10">
+            <input type="number" class="form-control" id="amount" placeholder="How much did you spend?">
+        </div>
+    </div>
+    <div class="form-group">
+        <select class="custom-select">
+            <option selected>Mode of Payment</option>
+            <option value="1">Cash</option>
+            <option value="2">E-Wallet</option>
+            <option value="3">Card</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Comments</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Submit">
+            </div>
+        </div>
+    </div>
+
+</form>
