@@ -26,7 +26,7 @@ $(document).ready(() => {
         method: 'get',
         url: 'http://localhost:5000/get-chart-data-income'
     })
-        .done((data => {
+        .done((data) => {
             let chart_data = data
             let arr_chart_data = []
             for (item in chart_data) arr_chart_data.push(chart_data[item])
@@ -41,6 +41,6 @@ $(document).ready(() => {
                     }]
                 }
             });
-        }))
+        })
 
 })
