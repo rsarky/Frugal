@@ -82,14 +82,11 @@ exports.login = (req, res) => {
                     res.redirect('/dashboard')
                 }
                 else {
-                    res.render('index', { nomatch: true })
+                    res.render('index', { layout:false,nomatch: true })
                 }
             }
             else {
-                res.send({
-                    "code": 204,
-                    "success": "Email does not exits"
-                });
+                res.render('index', { layout: false,nomatch: true })
             }
         }
     });
