@@ -1,0 +1,23 @@
+<ul class="list-group">
+    {{#each trans}}
+    <li class="list-group-item {{#if source}} list-group-item-success {{else}} list-group-item-danger {{/if}}">
+        <div class="row">
+            <div class="col-sm">
+                {{#if source}} Income : {{else}} Expense : {{/if}} {{amount}}
+            </div>
+            <div class="col-sm">
+                Comments : {{comments}}
+            </div>
+            <div class="col-sm">
+                {{#if source}}  Source: {{source}} {{else}} Category: {{category}} {{/if}}
+            </div>
+            <div class="col-sm">
+                Mode : {{mode}}
+            </div>
+            <div class="col-sm">
+                {{date date_time}}
+            </div>
+        </div>
+    </li>
+    {{/each}}
+</ul>

@@ -14,6 +14,7 @@ app.use(bodyParser.json())
 // HTML request logger
 app.use(logger('combined'))
 app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/node_modules'))
 
 // Session manager
 app.use(session({
@@ -23,9 +24,12 @@ app.use(session({
 }))
 
 // Handlebars setup
-app.engine('.hbs', hbs({ extname: '.hbs', defaultLayout: 'main' }));
+app.engine('.hbs', hbs({ extname: '.hbs', defaultLayout: 'main',helpers:{
+    date: (date) => {
+        return date.toString().slice(0,-15)
+    }
+} }));
 app.set('view engine', '.hbs');
-
 
 app.get('/', (req, res, next) => {
     res.render('index', { layout: false })
@@ -45,7 +49,12 @@ app.get('/dashboard', async (req, res) => {
     res.render('dashboard', { username: user.first_name, cash: balance.cash, ewallet: balance.ewallet, bank: balance.bank })
 })
 
-
+app.get('/report',(req,res) => {
+    res.render('report')
+})
+app.get('/transactions', routes.transactions)
+app.get('/get-chart-data',routes.getChartData)
+app.get('/get-chart-data-income',routes.getChartDataIncome)
 app.post('/expenditure', routes.expenditure)
 app.post('/income', routes.income)
 app.post('/update_balance', routes.update_balance)

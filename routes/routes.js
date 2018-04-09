@@ -194,7 +194,7 @@ exports.expenditure = (req, res) => {
                         }
                         else {
                             let cash = results[0].bank - parseInt(transaction.amount)
-                            connection.query('UPDATE balance set ewallet=? where user_id=?', [cash, req.session.userid],
+                            connection.query('UPDATE balance set bank=? where user_id=?', [cash, req.session.userid],
                                 (err, results, fields) => {
                                     if (err) {
                                         console.log(err)
@@ -286,7 +286,7 @@ exports.income = (req, res) => {
                         }
                         else {
                             let cash = results[0].bank + parseInt(transaction.amount)
-                            connection.query('UPDATE balance set ewallet=? where user_id=?', [cash, req.session.userid],
+                            connection.query('UPDATE balance set bank=? where user_id=?', [cash, req.session.userid],
                                 (err, results, fields) => {
                                     if (err) {
                                         console.log(err)
@@ -305,6 +305,73 @@ exports.income = (req, res) => {
     })
 
 }
+
+exports.transactions = (req, res) => {
+    const user_id = req.session.userid
+    let expenses
+    let incomes
+    connection.query('SELECT * from expense where user_id=?', [user_id],
+        (err, results) => {
+            if (err) {
+                console.log(err)
+                res.send("<h1>Error Occured</h1>")
+            }
+            else {
+                expenses = results
+                connection.query('SELECT * from income where user_id=?', [user_id],
+                    (err, results) => {
+                        if (err) {
+                            console.log(err)
+                            res.send("<h1>Error Occured</h1>")
+                        }
+                        else {
+                            incomes = results
+                            all_trans = expenses.concat(incomes)
+                            console.log(all_trans)
+                            all_trans.sort((a, b) => {
+
+                                return a.date_time - b.date_time
+                            })
+                            console.log(all_trans)
+                            res.render('transactions', { trans: all_trans })
+                        }
+                    })
+
+            }
+
+        })
+}
+
+exports.getChartData = async (req, res) => {
+    const user_id = req.session.userid
+    let data = {
+        Food: 0,
+        Travel: 0,
+        Utilities: 0,
+        Laundry: 0,
+        Others: 0
+    }
+    for (item in data) {
+        data[item] = await getChartDataHelper(user_id, item);
+        if (!data[item]) data[item] = 0
+    }
+    res.send(data)
+}
+
+exports.getChartDataIncome = async (req,res) => {
+    const user_id = req.session.userid
+    let data = {
+        Salary:0,
+        Parents:0,
+        Others:0
+    }
+    for (item in data) {
+        data[item] = await getChartDataIncomeHelper(user_id,item)
+        if(!data[item]) data[item] = 0
+    }
+    res.send(data)
+}
+
 exports.getUserById = (id) => {
     // Promises are motherfucking assholes.
     return new Promise((resolve, reject) => {
@@ -328,6 +395,37 @@ exports.getBalanceById = (id) => {
                 else {
                     console.log("No error")
                     resolve(results[0])
+                }
+            })
+    })
+}
+
+getChartDataHelper = (id, item) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT sum(amount) as amount from (SELECT amount from expense where user_id=? and category=?) A', [id, item],
+            (err, results, fields) => {
+                if (err) {
+                    console.log(err)
+                    reject(err)
+                }
+                else {
+                    resolve(results[0].amount)
+                }
+            })
+    })
+}
+
+getChartDataIncomeHelper = (id, item) => {
+    return new Promise((resolve, reject) => {
+        connection.query('SELECT sum(amount) as amount from (SELECT amount from income where user_id=? and source=?) A', [id, item],
+            (err, results, fields) => {
+                if (err) {
+                    console.log(err)
+                    reject(err)
+                }
+                else {
+                    console.log(results[0])
+                    resolve(results[0].amount)
                 }
             })
     })

@@ -8,3 +8,8 @@
 #income input{
     color:#8C9397
 }
+
+#myChart {
+    width: 400px;
+    height: 400px;
+}
