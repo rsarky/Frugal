@@ -1,5 +1,6 @@
 body {
-    padding-top: 90px;
+	padding-top: 90px;
+	background-image: url('http://localhost:5000/img/cash-coins-money-259165.jpg')
 }
 .panel-login {
 	border-color: #ccc;

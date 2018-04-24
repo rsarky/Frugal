@@ -13,7 +13,7 @@ $(document).ready(() => {
             var myChart = new Chart(ctx1, {
                 type: 'pie',
                 data: {
-                    labels: ["Food", "Laundry", "Others", "Travel", "Utilities"],
+                    labels: ["Food", "Travel", "Utilities","Laundry" ,"Others" ],
                     datasets: [{
                         data: arr_chart_data,
                         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"]
